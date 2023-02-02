@@ -1,14 +1,19 @@
 import { signOut } from "firebase/auth";
 import React from "react";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { logout } from "../../feature/auth/authSlice";
+import auth from "../../firebase/firebase.config";
 
 const Navbar = () => {
   const { pathname } = useLocation();
   const { email } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
   const handelSingOut = ()=>{
-    signOut()
+    signOut(auth).then(()=>{
+        dispatch(logout())
+    })
   }
   return (
     <nav
