@@ -8,7 +8,7 @@ import auth from "../../firebase/firebase.config";
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  const { email } = useSelector((state) => state.auth);
+  const { email,role } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const handelSingOut = ()=>{
     signOut(auth).then(()=>{
@@ -43,6 +43,18 @@ const Navbar = () => {
             Login
           </Link>}
         </li>
+        {email && role &&<li>
+          <Link className="hover:text-primary" to="/dashboard">
+            Dashboard
+          </Link>
+        </li>}
+        {
+          email && !role && <li>
+          <Link className="hover:text-primary" to="/register">
+            Add Role
+          </Link>
+        </li>
+        }
       </ul>
     </nav>
   );

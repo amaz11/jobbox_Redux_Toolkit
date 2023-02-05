@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/login.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../feature/auth/authSlice";
+import { googleAuth, loginUser } from "../feature/auth/authSlice";
 const Login = () => {
-  const {isLoading,email} = useSelector(state =>state.auth)
+  const {isLoading,email,isError, error} = useSelector(state =>state.auth)
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 const dispatch = useDispatch()
@@ -14,6 +14,10 @@ const dispatch = useDispatch()
     // console.log(data);
     dispatch(loginUser({email:data.email,password:data.password}))
   };
+
+  const handelGoogleLogin = ()=>{
+      dispatch(googleAuth())
+  }
 useEffect(()=>{
   if(!isLoading && email){
     navigate("/")
@@ -45,6 +49,9 @@ useEffect(()=>{
                   {...register("password")}
                 />
               </div>
+              <div className=''>
+                {isError&& <span>{error}</span>}
+              </div>
               <div className='relative !mt-8'>
                 <button
                   type='submit'
@@ -63,6 +70,9 @@ useEffect(()=>{
                     Sign up
                   </span>
                 </p>
+              </div>
+              <div>
+                <span className=" cursor-pointer underline " onClick={handelGoogleLogin}>Log in with GOOGLE Account</span>
               </div>
             </div>
           </form>
