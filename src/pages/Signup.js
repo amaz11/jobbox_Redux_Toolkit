@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import loginImage from "../assets/login.svg";
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createuser } from "../feature/auth/authSlice";
 const Signup = () => {
   const { handleSubmit, register, reset, control } = useForm();
@@ -11,6 +11,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const [disabled, setDisabled] = useState(true);
   const dispatch = useDispatch()
+  const {isLoading,user:{email}} = useSelector(state =>state.auth)
 
   useEffect(() => {
     if (
@@ -24,7 +25,10 @@ const Signup = () => {
     } else {
       setDisabled(true);
     }
-  }, [password, confirmPassword]);
+    if(!isLoading && email){
+      navigate("/")
+    }
+  }, [password, confirmPassword,isLoading,email]);
 
   const onSubmit = ({email,password}) => {
     // console.log(data);

@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import auth from "./firebase/firebase.config";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUser, toogleState } from "./feature/auth/authSlice";
+import { getUser, setUser, toogleState } from "./feature/auth/authSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -12,8 +12,8 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uEmail = user.email;
-        
-        dispatch(setUser(uEmail));
+        // dispatch(setUser(uEmail))
+        dispatch(getUser(uEmail));
         
       } else {
         dispatch(toogleState())

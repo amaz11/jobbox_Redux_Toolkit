@@ -6,7 +6,7 @@ import loginImage from "../assets/login.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { googleAuth, loginUser } from "../feature/auth/authSlice";
 const Login = () => {
-  const {isLoading,email,isError, error} = useSelector(state =>state.auth)
+  const {isLoading,user:{email},isError, error} = useSelector(state =>state.auth)
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 const dispatch = useDispatch()
